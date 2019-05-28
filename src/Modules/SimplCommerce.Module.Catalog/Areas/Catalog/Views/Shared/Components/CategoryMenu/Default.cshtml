@@ -1,0 +1,281 @@
+﻿@model IEnumerable<SimplCommerce.Module.Catalog.Areas.Catalog.ViewModels.CategoryMenuItem>
+
+@inject IViewLocalizer Localizer
+
+
+
+<div class="main-header-wrapper bdr-bottom1">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-header-inner">
+                    <div class="category-toggle-wrap">
+                        <div class="category-toggle">
+                            category
+                            <div class="cat-icon">
+                                <i class="fa fa-angle-down"></i>
+                            </div>
+                        </div>
+                        <nav class="category-menu hm-1">
+                            <ul>
+
+                                @foreach (var item in Model)
+                                {
+                                    if (item.ChildItems.Any())
+                                    {
+                                        <li class="menu-item-has-children">
+                                            <a href="/@item.Slug">
+                                                <i class="fa fa-camera"></i> @item.Name
+                                            </a>
+                                            <ul class="category-mega-menu">
+
+                                                @foreach (var childItem in item.ChildItems)
+                                                {
+                                                    <li class="menu-item-has-children">
+                                                        <a href="/@childItem.Slug">@childItem.Name</a>
+
+
+
+                                                        @if (childItem.ChildItems.Any())
+                                                        {
+                                                            <ul>
+                                                                @foreach (var item2 in childItem.ChildItems)
+                                                                {
+                                                                    <li><a href="/@item2.Slug">@item2.Name</a></li>
+                                                                }
+                                                            </ul>
+                                                        }
+
+                                                    </li>
+                                                }
+
+
+                                            </ul>
+
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="/@item.Slug">
+                                                <i class="fa fa-desktop"></i>
+                                                @item.Name
+                                            </a>
+                                        </li>
+                                    }
+                                }
+
+
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="main-menu">
+                        <nav id="mobile-menu">
+                            <ul>
+                                <li class="active">
+                                    <a href="#"><i class="fa fa-home"></i>Home <i class="fa fa-angle-down"></i></a>
+                                    <ul class="dropdown">
+                                        <li><a href="index.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/index.html">Home version 01</a></li>
+                                        <li><a href="index-2.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/index-2.html">Home version 02</a></li>
+                                        <li><a href="index-3.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/index-3.html">Home version 03</a></li>
+                                        <li><a href="index-4.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/index-4.html">Home version 04</a></li>
+                                    </ul>
+                                </li>
+                                <li class="static">
+                                    <a href="#">pages <i class="fa fa-angle-down"></i></a>
+                                    <ul class="megamenu dropdown">
+                                        <li class="mega-title">
+                                            <a href="#">column 01</a>
+                                            <ul>
+                                                <li>
+                                                    <a href="shop-grid-left-sidebar.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/shop-grid-left-sidebar.html">
+                                                        shop grid left
+                                                        sidebar
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="shop-grid-right-sidebar.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/shop-grid-right-sidebar.html">
+                                                        shop grid right
+                                                        sidebar
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="shop-grid-full-3-col.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/shop-grid-full-3-col.html">
+                                                        shop grid full 3
+                                                        column
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="shop-grid-full-4-col.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/shop-grid-full-4-col.html">
+                                                        shop grid full 4
+                                                        column
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="mega-title">
+                                            <a href="#">column 02</a>
+                                            <ul>
+                                                <li><a href="product-details.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/product-details.html">product details</a></li>
+                                                <li>
+                                                    <a href="product-details-affiliate.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/product-details-affiliate.html">
+                                                        product
+                                                        details
+                                                        affiliate
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="product-details-variable.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/product-details-variable.html">
+                                                        product details
+                                                        variable
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="product-details-group.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/product-details-group.html">
+                                                        product details
+                                                        group
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="mega-title">
+                                            <a href="#">column 03</a>
+                                            <ul>
+                                                <li><a href="cart.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/cart.html">cart</a></li>
+                                                <li><a href="checkout.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/checkout.html">checkout</a></li>
+                                                <li><a href="compare.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/compare.html">compare</a></li>
+                                                <li><a href="wishlist.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/wishlist.html">wishlist</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="mega-title">
+                                            <a href="#">column 04</a>
+                                            <ul>
+                                                <li><a href="my-account.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/my-account.html">my-account</a></li>
+                                                <li><a href="login-register.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/login-register.html">login-register</a></li>
+                                                <li><a href="about-us.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/about-us.html">about us</a></li>
+                                                <li><a href="contact-us.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/contact-us.html">contact us</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">shop <i class="fa fa-angle-down"></i></a>
+                                    <ul class="dropdown">
+                                        <li>
+                                            <a href="#">shop grid layout <i class="fa fa-angle-right"></i></a>
+                                            <ul class="dropdown">
+                                                <li>
+                                                    <a href="shop-grid-left-sidebar.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/shop-grid-left-sidebar.html">
+                                                        shop grid left
+                                                        sidebar
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="shop-grid-left-sidebar-3-col.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/shop-grid-left-sidebar-3-col.html">
+                                                        left
+                                                        sidebar 3 col
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="shop-grid-right-sidebar.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/shop-grid-right-sidebar.html">
+                                                        shop grid right
+                                                        sidebar
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="shop-grid-right-sidebar-3-col.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/shop-grid-right-sidebar-3-col.html">
+                                                        grid right
+                                                        sidebar 3 col
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="shop-grid-full-3-col.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/shop-grid-full-3-col.html">
+                                                        shop grid full 3
+                                                        column
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="shop-grid-full-4-col.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/shop-grid-full-4-col.html">
+                                                        shop grid full 4
+                                                        column
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">shop list layout <i class="fa fa-angle-right"></i></a>
+                                            <ul class="dropdown">
+                                                <li>
+                                                    <a href="shop-list-left-sidebar.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/shop-list-left-sidebar.html">
+                                                        shop list left
+                                                        sidebar
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="shop-list-right-sidebar.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/shop-list-right-sidebar.html">
+                                                        shop list right
+                                                        sidebar
+                                                    </a>
+                                                </li>
+                                                <li><a href="shop-list-full.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/shop-list-full.html">shop list full width</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">products details <i class="fa fa-angle-right"></i></a>
+                                            <ul class="dropdown">
+                                                <li><a href="product-details.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/product-details.html">product details</a></li>
+                                                <li>
+                                                    <a href="product-details-affiliate.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/product-details-affiliate.html">
+                                                        product
+                                                        details
+                                                        affiliate
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="product-details-variable.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/product-details-variable.html">
+                                                        product details
+                                                        variable
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="product-details-group.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/product-details-group.html">
+                                                        product details
+                                                        group
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="product-details-box.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/product-details-box.html">
+                                                        product details box
+                                                        slider
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Blog <i class="fa fa-angle-down"></i></a>
+                                    <ul class="dropdown">
+                                        <li><a href="blog-left-sidebar.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/blog-left-sidebar.html">blog left sidebar</a></li>
+                                        <li><a href="blog-left-sidebar-2-col.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/blog-left-sidebar-2-col.html">blog left sidebar 2 col</a></li>
+                                        <li><a href="blog-right-sidebar.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/blog-right-sidebar.html">blog right sidebar</a></li>
+                                        <li><a href="blog-full-2-column.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/blog-full-2-column.html">blog full 2 column</a></li>
+                                        <li><a href="blog-full-3-column.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/blog-full-3-column.html">blog full 3 column</a></li>
+                                        <li><a href="blog-details.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/blog-details.html">blog details</a></li>
+                                        <li><a href="blog-details-audio.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/blog-details-audio.html">blog details audio</a></li>
+                                        <li><a href="blog-details-video.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/blog-details-video.html">blog details video</a></li>
+                                        <li><a href="blog-details-image.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/blog-details-image.html">blog details image</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="contact-us.html" tppabs="http://www.17sucai.com/preview/1528155/2019-01-03/Galio/contact-us.html">Contact us</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 d-block d-lg-none">
+                <div class="mobile-menu"></div>
+            </div>
+        </div>
+    </div>
+</div>

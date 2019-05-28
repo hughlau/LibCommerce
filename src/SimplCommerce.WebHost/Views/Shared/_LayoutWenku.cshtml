@@ -1,0 +1,100 @@
+﻿@using System.Globalization
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"] - SimplCommerce</title>
+    @RenderSection("additionalMeta", false)
+
+    <link simpl-append-version="true" rel="stylesheet" href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" />
+    <link simpl-append-version="true" rel="stylesheet" href="~/lib/wenku/css/bootstrap.css" />
+
+    <link rel="stylesheet" href="~/lib/wenku/css/flat-ui.min.css" />
+
+    <link rel="stylesheet" href="~/lib/wenku/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/wenku/css/jquery.toast.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/wenku/css/dochub.css" />
+
+    <link rel="stylesheet" type="text/css" href="~/lib/wenku/css/dochub-mobile.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/wenku/jrcss/nav.css" />
+    <style type="text/css">
+        @@media (max-width: 768px) {
+            .navbar-fixed-bottom1 {
+                display: block !important;
+            }
+        }
+    </style>
+
+    @RenderSection("head", required: false)
+</head>
+
+<body id="wenku-content" class="" ndragstart="window.event.returnValue=false" oncontextmenu="window.event.returnValue=false" onselectstart="event.returnValue=false">
+    <div class="top-bar">
+        <div class="container">
+            <ul class="nav justify-content-end">
+                <partial name="_SelectLanguagePartial" />
+                <partial name="_LoginPartial" />
+            </ul>
+        </div>
+    </div>
+    <div class="main-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4 logo">
+                    <a asp-area="Core" asp-controller="Home" asp-action="Index">
+                        <img alt="SimplCommerce" src="~/modules/core/Logo_SimplCommerce.png" />
+                    </a>
+                </div>
+                <div class="col-10 col-md-5 col-lg-7 search-box">
+                    @await Component.InvokeAsync("SearchForm")
+                </div>
+                <div class="col-2 col-md-1 cart-btn">
+                    @await Component.InvokeAsync("CartBadge")
+                </div>
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+    <div class="modal fade" id="ModalShare" tabindex="-1" role="dialog" aria-labelledby="ModalShareLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="ModalShareLabel">分享，让知识传承更久远</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="bdsharebuttonbox">
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消分享</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+            window.simplGlobalSetting = {};
+            window.simplGlobalSetting.lang = '@CultureInfo.CurrentCulture.Name';
+    </script>
+
+    <script src="~/lib/wenku/js/base.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="~/lib/wenku/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="~/lib/wenku/js/jquery.toast.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="~/lib/wenku/js/jquery.scrollstop.js" type="text/javascript" charset="utf-8"></script>
+    <script src="~/lib/wenku/js/jquery.lazyload.js" type="text/javascript" charset="utf-8"></script>
+    <script src="~/lib/wenku/js/jquery.share.min.js"></script>
+    <script src="~/lib/wenku/js/bootstrap.min.js"></script>
+    <script src="~/lib/wenku/js/vue.js" type="text/javascript" charset="utf-8"></script>
+    <script src="~/lib/wenku/js/info.js" type="text/javascript" charset="utf-8"></script>
+    <script src="~/lib/wenku/js/new_file.js" type="text/javascript" charset="utf-8"></script>
+    @RenderSection("scripts", required: false)
+
+    <partial name="_AnalyticsScript" />
+</body>
+</html>
