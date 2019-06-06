@@ -138,5 +138,9 @@
   {
     "id": "SimplCommerce.Module.WishList",
     "version": "1.0.0"
+  },
+  {
+    "id": "SimplCommerce.Module.TransferFile",
+    "version": "1.0.0"
   }
 ]

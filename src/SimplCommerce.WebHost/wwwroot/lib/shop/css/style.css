@@ -1345,8 +1345,8 @@ only screen and (min-width: 768px) and (max-width: 991px) {
 }
 
 .main-header-inner .category-toggle-wrap {
-    -ms-flex-preferred-size: 270px;
-    flex-basis: 270px;
+    -ms-flex-preferred-size: 200px;
+    flex-basis: 200px;
     position: relative;
 }
 

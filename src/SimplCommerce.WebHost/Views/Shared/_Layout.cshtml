@@ -18,13 +18,15 @@
     <link simpl-append-version="true" rel="stylesheet" href="~/lib/shop/css/style.css" />
     <link simpl-append-version="true" rel="stylesheet" href="~/lib/shop/css/skin-default.css" />
     <link simpl-append-version="true" rel="stylesheet" href="~/modules/core/site.css" />
+    <link simpl-append-version="true" rel="stylesheet" type="text/css" href="~/themes/CozaStore/vendor/animsition/css/animsition.min.css" />
     <script simpl-append-version="true" src="~/lib/angular/angular.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     @RenderSection("head", required: false)
 </head>
-<body>
+<body class="animsition">
+
     <div class="top-bar">
         <div class="container">
             <ul class="nav justify-content-end">
@@ -67,30 +69,62 @@
         <div class="container body-content">
             @RenderBody()
         </div>
-       
+
     </div>
-    
+
     <div class="footer-content">
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
-                    <h4>@Localizer["Customer Service"]</h4>
-                    <vc:menu menu-id="1"></vc:menu>
+                @*<div class="col-md-3">
+                        <h4>@Localizer["Customer Service"]</h4>
+                        <vc:menu menu-id="1"></vc:menu>
+                    </div>
+                    <div class="col-md-3">
+                        <h4>Information</h4>
+                        <vc:menu menu-id="2"></vc:menu>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>SimplCommerce</h4>
+                        <p>The first ecommerce system built on .NET Core.</p>
+                        <p>Simple to use and easy to customize</p>
+                        <p>Cross platform and Open source</p>
+                    </div>*@
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid wenku-footer-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center wenku-help help-block">
+
+                    <a href="about1.html" target="_blank" title="关于我们">关于我们</a>
+
+                    <a href="about2.html" target="_blank" title="关于我们">文库协议</a>
+
+                    <a href="about3.html" target="_blank" title="意见反馈">版本更新</a>
+
+                    <a href="about4.html" target="_blank" title="免责声明">免责声明</a>
+
+                    <a href="about5.html" target="_blank" title="意见反馈">联系我们</a>
+
                 </div>
-                <div class="col-md-3">
-                    <h4>Information</h4>
-                    <vc:menu menu-id="2"></vc:menu>
+                <div class="col-md-12 text-center help-block">
+                    文库之家&nbsp;&nbsp;&copy;@DateTime.Now.Year&nbsp;&nbsp;<span class="text-muted">|</span>&nbsp;&nbsp;
+                    <a href="/sitemap.xml" title="站点地图" target="_blank">站点地图</a>
                 </div>
-                <div class="col-md-6">
-                    <h4>SimplCommerce</h4>
-                    <p>The first ecommerce system built on .NET Core.</p>
-                    <p>Simple to use and easy to customize</p>
-                    <p>Cross platform and Open source</p>
+                <div class="col-md-12 text-center help-block">
+                    <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">粤ICP备18004373号-2</a>
+                </div>
+                <div class="col-md-12 text-center help-block">
+                    <small>
+                        Powered By <a href="#" style="color: #1abc9c;" target="_blank" title="DocHub">DocHub</a> v2.1
+                    </small>
+                </div>
+
+                <div class="col-md-12 text-center">
                 </div>
             </div>
-            <hr />
-            <p class="pull-left">&copy; @DateTime.Now.Year - SimplCommerce</p>
-            <p class="pull-right">Powered by <a href="http://www.SimplCommerce.com"><strong>SimplCommerce</strong></a></p>
         </div>
     </div>
     <div id="shopModal" class="modal fade" tabindex="-1" role="dialog">
@@ -119,6 +153,8 @@
     {
         <script simpl-append-version="true" src="~/lib/bootstrap-star-rating/js/locales/vi-vn.js"></script>
     }
+    <script simpl-append-version="true" src="~/themes/CozaStore/vendor/animsition/js/animsition.min.js"></script>
+    <script simpl-append-version="true" src="~/themes/CozaStore/js/cozastore.js"></script>
     <script simpl-append-version="true" src="~/modules/core/main.js"></script>
     <script simpl-append-version="true" src="~/modules/shoppingcart/add-to-cart.js"></script>
     <script simpl-append-version="true" src="~/modules/productcomparison/product-comparison.js"></script>

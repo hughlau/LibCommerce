@@ -44,7 +44,17 @@ namespace SimplCommerce.Module.StorageAzureBlob
             return $"{_publicEndpoint}/{fileName}";
         }
 
-        public async Task SaveMediaAsync(Stream mediaBinaryStream, string fileName, string mimeType = null)
+        public string GetMediaUrlImg(string fileName, string category)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string GetMediaUrlUpload(string fileName, string category)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task SaveMediaAsync(Stream mediaBinaryStream, string category, string fileName, string mimeType = null)
         {
             await _blobContainer.SetPermissionsAsync(new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Container });
             await _blobContainer.CreateIfNotExistsAsync();

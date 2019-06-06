@@ -10,13 +10,10 @@
 
     <link simpl-append-version="true" rel="stylesheet" href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" />
     <link simpl-append-version="true" rel="stylesheet" href="~/lib/wenku/css/bootstrap.css" />
-
-    <link rel="stylesheet" href="~/lib/wenku/css/flat-ui.min.css" />
-
+    <link simpl-append-version="true" rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="~/lib/wenku/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="~/lib/wenku/css/jquery.toast.min.css" />
     <link rel="stylesheet" type="text/css" href="~/lib/wenku/css/dochub.css" />
-
     <link rel="stylesheet" type="text/css" href="~/lib/wenku/css/dochub-mobile.css" />
     <link rel="stylesheet" type="text/css" href="~/lib/wenku/jrcss/nav.css" />
     <style type="text/css">
@@ -50,13 +47,44 @@
                 <div class="col-10 col-md-5 col-lg-7 search-box">
                     @await Component.InvokeAsync("SearchForm")
                 </div>
-                <div class="col-2 col-md-1 cart-btn">
-                    @await Component.InvokeAsync("CartBadge")
-                </div>
             </div>
         </div>
     </div>
     @RenderBody()
+    <div class="container-fluid wenku-footer-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 text-center wenku-help help-block">
+
+                    <a href="about1.html" target="_blank" title="关于我们">关于我们</a>
+
+                    <a href="about2.html" target="_blank" title="关于我们">文库协议</a>
+
+                    <a href="about3.html" target="_blank" title="意见反馈">版本更新</a>
+
+                    <a href="about4.html" target="_blank" title="免责声明">免责声明</a>
+
+                    <a href="about5.html" target="_blank" title="意见反馈">联系我们</a>
+
+                </div>
+                <div class="col-xs-12 text-center help-block">
+                    文库之家&nbsp;&nbsp;&copy;2019&nbsp;&nbsp;<span class="text-muted">|</span>&nbsp;&nbsp;
+                    <a href="/sitemap.xml" title="站点地图" target="_blank">站点地图</a>
+                </div>
+                <div class="col-xs-12 text-center help-block">
+                    <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">粤ICP备18004373号-2</a>
+                </div>
+                <div class="col-xs-12 text-center help-block">
+                    <small>
+                        Powered By <a href="#" style="color: #1abc9c;" target="_blank" title="DocHub">DocHub</a> v2.1
+                    </small>
+                </div>
+
+                <div class="col-xs-12 text-center">
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="ModalShare" tabindex="-1" role="dialog" aria-labelledby="ModalShareLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

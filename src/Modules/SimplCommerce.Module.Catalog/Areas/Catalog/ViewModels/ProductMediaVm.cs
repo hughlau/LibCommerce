@@ -7,5 +7,7 @@
         public string Caption { get; set; }
 
         public string MediaUrl { get; set; }
+
+        public string ImgDirectoryUrl { get; set; }
     }
 }

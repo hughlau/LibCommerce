@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
+using SimplCommerce.Infrastructure;
 using SimplCommerce.Infrastructure.Data;
 using SimplCommerce.Infrastructure.Helpers;
 using SimplCommerce.Infrastructure.Web.SmartTable;
@@ -23,7 +24,7 @@ using SimplCommerce.Module.Core.Services;
 namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
 {
     [Area("Catalog")]
-    [Authorize(Roles = "admin, vendor")]
+    
     [Route("api/products")]
     public class ProductApiController : Controller
     {
@@ -36,6 +37,7 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
         private readonly IProductService _productService;
         private readonly IRepository<ProductMedia> _productMediaRepository;
         private readonly IWorkContext _workContext;
+        private readonly ICacheService _cacheService;
 
         public ProductApiController(
             IRepository<Product> productRepository,
@@ -46,7 +48,8 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
             IRepository<ProductOptionValue> productOptionValueRepository,
             IRepository<ProductAttributeValue> productAttributeValueRepository,
             IRepository<ProductMedia> productMediaRepository,
-            IWorkContext workContext)
+            IWorkContext workContext,
+            ICacheService cacheService)
         {
             _productRepository = productRepository;
             _mediaService = mediaService;
@@ -57,9 +60,11 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
             _productAttributeValueRepository = productAttributeValueRepository;
             _productMediaRepository = productMediaRepository;
             _workContext = workContext;
+            _cacheService = cacheService;
         }
 
         [HttpGet("quick-search")]
+        [Authorize(Roles = "admin, vendor")]
         public async Task<IActionResult> QuickSearch(string name)
         {
             var query = _productRepository.Query()
@@ -80,6 +85,7 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "admin, vendor")]
         public async Task<IActionResult> Get(long id)
         {
             var product = _productRepository.Query()
@@ -213,6 +219,7 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
         }
 
         [HttpPost("trnasfer/{id}")]
+        [Authorize(Roles = "admin, vendor")]
         public async Task<IActionResult> TrnasferImage(long id)
         {
             var product = _productRepository.Query()
@@ -267,14 +274,19 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
                     MediaUrl = _mediaService.GetThumbnailUrl(productMedia.Media)
                 });
             }
-
+            long categoryId = 0;
+            if (productVm.CategoryIds.Count > 0)
+            {
+                categoryId = productVm.CategoryIds.Max();
+            }
             foreach (var productMedia in product.Medias.Where(x => x.Media.MediaType == MediaType.File))
             {
+
                 productVm.ProductDocuments.Add(new ProductMediaVm
                 {
                     Id = productMedia.Id,
                     Caption = productMedia.Media.Caption,
-                    MediaUrl = _mediaService.GetMediaUrl(productMedia.Media)
+                    MediaUrl = _mediaService.GetMediaUrlByUpload(productMedia.Media, categoryId.ToString())
                 });
             }
 
@@ -337,31 +349,56 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
                 GroupName = x.Attribute.Group.Name,
                 Value = x.Value
             }).ToList();
+           
             string path = Environment.CurrentDirectory+ "\\wwwroot"+ productVm.ProductDocuments[0].MediaUrl;
-            string pdfpath = Environment.CurrentDirectory + "/wwwroot/user-content/pdf/1.pdf";
-            string back = "成功";
-            try
+            string imgFloder = Path.GetFileNameWithoutExtension(Path.GetFileName(productVm.ProductDocuments[0].MediaUrl));
+            if (Directory.Exists(Environment.CurrentDirectory + "\\wwwroot\\imgfile\\"+categoryId.ToString()+"\\"+ imgFloder+"\\"))
             {
-                OfficeHelper.Word2PDF(path, pdfpath);
-                if (!Directory.Exists(Environment.CurrentDirectory + "/wwwroot/user-content/pdf/1/"))
-                {
-                    Directory.CreateDirectory(Environment.CurrentDirectory + "/wwwroot/user-content/pdf/1/");
-                }
-                SwfHelper.Pdf2Img(pdfpath, Environment.CurrentDirectory + "/wwwroot/user-content/pdf/1/");
+                Directory.Delete(Environment.CurrentDirectory + "\\wwwroot\\imgfile\\" + categoryId.ToString() + "\\" + imgFloder + "\\", true);
             }
-            catch(Exception ex)
-            {
-                back = "失败"+ex.Message;
-            }
+            int back = _mediaService.FileToImage(path, categoryId.ToString());
+            product.PageSize = back;
+            _productService.Update(product);
             ContentResult br = new ContentResult();
             br.Content = "{\"data\":\""+back+"\"}";
             br.ContentType = "application/json";
             return br;
         }
 
-        [HttpGet("show/{id}")]
-        public async Task<IActionResult> Show(long id)
+        [HttpGet("down/{dtoken}")]
+        [Authorize(Roles = "customer,admin,vendor")]
+        public IActionResult DownFile(string dtoken) {
+            string name = _cacheService.Get(dtoken).ToString();
+            var product = _productRepository.Query()
+                .Include(x => x.ThumbnailImage)
+                .Include(x => x.Medias).ThenInclude(m => m.Media)
+                .Include(x => x.ProductLinks).ThenInclude(p => p.LinkedProduct)
+                .Include(x => x.OptionValues).ThenInclude(o => o.Option)
+                .Include(x => x.AttributeValues).ThenInclude(a => a.Attribute).ThenInclude(g => g.Group)
+                .Include(x => x.Categories)
+                .FirstOrDefault(x => x.Name == name);
+            var docnum= product.Medias.Where(x => x.Media.MediaType == MediaType.File).ToList().Count;
+            if (docnum>0)
+            {
+                var pmedia= product.Medias.FirstOrDefault(x => x.Media.MediaType == MediaType.File).Media;
+                string cid = "0";
+                if (product.Categories!=null && product.Categories.Count>0)
+                {
+                    cid = product.Categories.Max().ToString();
+                }
+                string path= Environment.CurrentDirectory + "\\wwwroot" +_mediaService.GetMediaUrlByUpload(pmedia,cid);
+                var stream = System.IO.File.OpenRead(path);
+                
+                return File(stream, "application/vnd.android.package-archive",product.Name+ Path.GetExtension(path));
+            }
+            return null;
+        }
+
+        [HttpGet("show/{name}")]
+        public async Task<IActionResult> Show(string name)
         {
+            var urlSlug = await _productRepository.Query().FirstOrDefaultAsync(x => x.Slug == name);
+            long id = urlSlug.Id;
             var product = _productRepository.Query()
                 .Include(x => x.ThumbnailImage)
                 .Include(x => x.Medias).ThenInclude(m => m.Media)
@@ -405,7 +442,11 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
                 TaxClassId = product.TaxClassId,
                 StockTrackingIsEnabled = product.StockTrackingIsEnabled
             };
-
+            long categoryId = 0;
+            if (productVm.CategoryIds.Count > 0)
+            {
+                categoryId = productVm.CategoryIds.Max();
+            }
             foreach (var productMedia in product.Medias.Where(x => x.Media.MediaType == MediaType.Image))
             {
                 productVm.ProductImages.Add(new ProductMediaVm
@@ -421,7 +462,8 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
                 {
                     Id = productMedia.Id,
                     Caption = productMedia.Media.Caption,
-                    MediaUrl = _mediaService.GetMediaUrl(productMedia.Media)
+                    MediaUrl = _mediaService.GetMediaUrl(productMedia.Media),
+                    ImgDirectoryUrl = _mediaService.GetMediaUrlByImg(productMedia.Media, categoryId.ToString())
                 });
             }
 
@@ -503,14 +545,15 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
             productShow.content[0].f_view="5";
             productShow.content[0].f_page="5";
             productShow.content[0].f_date="2019/05/07 22:33:06";
-            productShow.content[0].f_img="images/pdf.jpg";
+            productShow.content[0].f_img="/lib/wenku/images/word.jpg";
             productShow.content[0].f_desc="测试生成缩略图";
             productShow.content[0].doc = new List<docItem>();
             productShow.content[0].indexComment = new IndexComment();
-            for (int i = 1; i < 6; i++)
+            string imgUrl = productVm.ProductDocuments[0].ImgDirectoryUrl;
+            for (int i = 0; i < 10; i++)
             {
                 docItem item = new docItem();
-                item.pic = "/user-content/pdf/1/pdf_" + i + ".png";
+                item.pic = imgUrl + i + ".jpg";
 ;               productShow.content[0].doc.Add(item);
             }
             productShow.Hot = new List<HotItem>();
@@ -519,6 +562,7 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
         }
 
         [HttpPost("grid")]
+        [Authorize(Roles = "admin, vendor")]
         public async Task<IActionResult> List([FromBody] SmartTableParam param)
         {
             var query = _productRepository.Query().Where(x => !x.IsDeleted);
@@ -591,6 +635,7 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin, vendor")]
         public async Task<IActionResult> Post(ProductForm model)
         {
             if (!ModelState.IsValid)
@@ -682,6 +727,7 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin, vendor")]
         public async Task<IActionResult> Put(long id, ProductForm model)
         {
             if (!ModelState.IsValid)
@@ -771,6 +817,7 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
         }
 
         [HttpPost("change-status/{id}")]
+        [Authorize(Roles = "admin, vendor")]
         public async Task<IActionResult> ChangeStatus(long id)
         {
             var product = _productRepository.Query().FirstOrDefault(x => x.Id == id);
@@ -792,6 +839,7 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin, vendor")]
         public async Task<IActionResult> Delete(long id)
         {
             var product = _productRepository.Query().FirstOrDefault(x => x.Id == id);
@@ -1122,9 +1170,14 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
 
         private async Task SaveProductMedias(ProductForm model, Product product)
         {
+             long categoryId = 0;
+            if (model.Product.CategoryIds.Count>0)
+            {
+                categoryId = model.Product.CategoryIds.Max();
+            }
             if (model.ThumbnailImage != null)
             {
-                var fileName = await SaveFile(model.ThumbnailImage);
+                var fileName = await SaveFile(model.ThumbnailImage,categoryId.ToString());
                 if (product.ThumbnailImage != null)
                 {
                     product.ThumbnailImage.FileName = fileName;
@@ -1147,10 +1200,10 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
                     model.ProductDocuments.Add(file);
                 }
             }
-
+           
             foreach (var file in model.ProductImages)
             {
-                var fileName = await SaveFile(file);
+                var fileName = await SaveFile(file, categoryId.ToString());
                 var productMedia = new ProductMedia
                 {
                     Product = product,
@@ -1158,10 +1211,10 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
                 };
                 product.AddMedia(productMedia);
             }
-
+            
             foreach (var file in model.ProductDocuments)
             {
-                var fileName = await SaveFile(file);
+                var fileName = await SaveFile(file, categoryId.ToString());
                 var productMedia = new ProductMedia
                 {
                     Product = product,
@@ -1171,11 +1224,11 @@ namespace SimplCommerce.Module.Catalog.Areas.Catalog.Controllers
             }
         }
 
-        private async Task<string> SaveFile(IFormFile file)
+        private async Task<string> SaveFile(IFormFile file,string category)
         {
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Value.Trim('"');
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
-            await _mediaService.SaveMediaAsync(file.OpenReadStream(), fileName, file.ContentType);
+            await _mediaService.SaveMediaAsync(file.OpenReadStream(), category, fileName, file.ContentType);
             return fileName;
         }
     }

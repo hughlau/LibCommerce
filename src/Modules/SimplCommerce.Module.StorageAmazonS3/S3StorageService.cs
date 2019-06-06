@@ -53,7 +53,17 @@ namespace SimplCommerce.Module.StorageAmazonS3
             return string.Concat(_publicEndpoint, fileName);
         }
 
-        public async Task SaveMediaAsync(Stream mediaBinaryStream, string fileName, string mimeType = null)
+        public string GetMediaUrlImg(string fileName, string category)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string GetMediaUrlUpload(string fileName, string category)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task SaveMediaAsync(Stream mediaBinaryStream, string category, string fileName, string mimeType = null)
         {
             var uploadRequest = new TransferUtilityUploadRequest
             {

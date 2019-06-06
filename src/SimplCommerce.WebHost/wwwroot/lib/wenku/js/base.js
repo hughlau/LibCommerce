@@ -8,6 +8,13 @@ function getQueryString(name) {
 	if(r != null) return r[2];
 	return '';
 }
+
+function getLastString() {
+    var URL = decodeURI(window.location.href);
+    var innum = URL.lastIndexOf('/') + 1;
+    return URL.substr(innum, URL.length - innum);
+}
+
 function getQueryStrings(name) {
     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
         var URL =  decodeURI(window.location.search);

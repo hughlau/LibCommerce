@@ -1,4 +1,6 @@
 ﻿using Aspose.Words;
+using Aspose.Words.Saving;
+using System.IO;
 
 /****************************************************************
 *   Author：L
@@ -45,6 +47,30 @@ namespace SimplCommerce.Infrastructure.Helpers
                 throw;
             }
         }
+
+        public static void Word2Jpg(string strDocPath,string imgPath)
+        {
+            try
+            {
+                Document srcDoc = new Document(strDocPath);
+                ImageSaveOptions iso = new ImageSaveOptions(SaveFormat.Jpeg);
+                iso.Resolution = 128;
+                iso.PrettyFormat = true;
+                iso.UseAntiAliasing = true;
+                for (int i = 0; i < srcDoc.PageCount; i++)
+                {
+                    iso.PageIndex = i;
+                    srcDoc.Save(Path.Combine(imgPath,  i + ".jpg"), iso);
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+       
+
 
         #endregion
     }

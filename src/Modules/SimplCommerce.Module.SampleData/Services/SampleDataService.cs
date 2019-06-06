@@ -46,7 +46,7 @@ namespace SimplCommerce.Module.SampleData.Services
             {
                 using (var stream = File.Open(file, FileMode.Open, FileAccess.Read))
                 {
-                    await _mediaService.SaveMediaAsync(stream, Path.GetFileName(file));
+                    await _mediaService.SaveMediaAsync(stream,"img", Path.GetFileName(file));
                 }
             }
         }

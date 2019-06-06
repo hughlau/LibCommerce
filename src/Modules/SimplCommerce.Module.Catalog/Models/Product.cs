@@ -80,6 +80,8 @@ namespace SimplCommerce.Module.Catalog.Models
 
         public TaxClass TaxClass { get; set; }
 
+        public int PageSize { get; set; }
+
         public void AddCategory(ProductCategory category)
         {
             category.Product = this;
@@ -150,6 +152,7 @@ namespace SimplCommerce.Module.Catalog.Models
             product.DisplayOrder = DisplayOrder;
             product.TaxClassId = TaxClassId;
             product.Slug = Slug;
+            product.PageSize = PageSize;
 
             foreach (var attribute in AttributeValues)
             {

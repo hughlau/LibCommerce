@@ -79,58 +79,58 @@
 
 /*----- theme color css end ----*/
 /*----- background color css start ----*/
-.modal .modal-header .close:hover,
-.slick-arrow-style_2.slick-slider .slick-arrow:hover,
-.slick-dot-style ul.slick-dots li.slick-active button,
-.home-btn:hover,
-.home-btn.hm4-btn:hover,
-.sqr-btn,
-.scroll-top,
-.tooltip>.tooltip-inner,
-.header-middle-right .header-middle-shipping .single-block-shipping:hover .shipping-icon,
-.header-middle-right .header-middle-block .header-middle-searchbox button.search-btn:hover,
-.header-middle-right .header-middle-block .header-mini-cart:hover,
-.header-middle-right .header-middle-block .header-mini-cart .mini-cart-btn span.cart-notification,
-.header-middle-right .header-middle-block .header-mini-cart ul.cart-list li.checkout-btn a:hover,
-.main-header-inner .category-toggle-wrap .category-toggle,
-.main-header-inner .category-toggle-wrap nav.category-menu>ul>li>a:hover,
-.main-header-inner.header-2 .mini-cart2 .header-mini-cart .mini-cart-btn span.cart-notification,
-.main-header-inner.header-2 .mini-cart2 .header-mini-cart ul.cart-list li.checkout-btn a:hover,
-.sidebar-category ul li.title,
-.price-range-wrap .range-slider button.filter-btn:hover,
-.product-tag a:hover,
-.product-item .product-thumb .product-action-link a:hover,
-.product-list-item .product-list-content .product-list-action-link a:nth-child(odd),
-.top-bar-left .product-view-mode a:hover,
-.top-bar-left .product-view-mode a.active,
-.blog-item .blog-sharing a:hover,
-.comment-section ul li .comment-body .reply-btn a:hover,
-.product-details-des .action_link a.buy-btn,
-.product-details-des .action_link a.buy-btn i,
-.product-details-des .useful-links a:hover,
-.custom-checkbox input:checked~.custom-control-label:before,
-.custom-checkbox input:checked label:before,
-.custom-checkbox .custom-control-input:checked~.custom-control-label:before,
-.custom-checkbox .custom-control-input:checked label:before,
-.custom-radio input:checked~.custom-control-label:before,
-.custom-radio input:checked label:before,
-.custom-radio .custom-control-input:checked~.custom-control-label:before,
-.custom-radio .custom-control-input:checked label:before,
-.cart-table .table thead,
-.myaccount-tab-menu a:hover,
-.myaccount-tab-menu a.active,
-.team-member .team-thumb .team-social a:hover,
-.blog-sidebar .title::before,
-.blog-sidebar .blog-tags li a:hover,
-.footer-top-wrapper .social-icons a:hover,
-.footer-widget .widget-body a.map-btn:hover,
-.footer-top-wrapper .newsletter__wrap .newsletter__box button,
-.price-range-wrap .price-range.ui-widget-content .ui-slider-range,
-.price-range-wrap .price-range.ui-widget-content .ui-slider-handle,
-.layout-changer li button:hover,
-.layout-changer li button.active {
-    background-color: #d8373e !important;
-}
+    .modal .modal-header .close:hover,
+    .slick-arrow-style_2.slick-slider .slick-arrow:hover,
+    .slick-dot-style ul.slick-dots li.slick-active button,
+    .home-btn:hover,
+    .home-btn.hm4-btn:hover,
+    .sqr-btn,
+    .scroll-top,
+    .tooltip > .tooltip-inner,
+    .header-middle-right .header-middle-shipping .single-block-shipping:hover .shipping-icon,
+    .header-middle-right .header-middle-block .header-middle-searchbox button.search-btn:hover,
+    .header-middle-right .header-middle-block .header-mini-cart:hover,
+    .header-middle-right .header-middle-block .header-mini-cart .mini-cart-btn span.cart-notification,
+    .header-middle-right .header-middle-block .header-mini-cart ul.cart-list li.checkout-btn a:hover,
+    .main-header-inner .category-toggle-wrap .category-toggle,
+    .main-header-inner .category-toggle-wrap nav.category-menu > ul > li > a:hover,
+    .main-header-inner.header-2 .mini-cart2 .header-mini-cart .mini-cart-btn span.cart-notification,
+    .main-header-inner.header-2 .mini-cart2 .header-mini-cart ul.cart-list li.checkout-btn a:hover,
+    .sidebar-category ul li.title,
+    .price-range-wrap .range-slider button.filter-btn:hover,
+    .product-tag a:hover,
+    .product-item .product-thumb .product-action-link a:hover,
+    .product-list-item .product-list-content .product-list-action-link a:nth-child(odd),
+    .top-bar-left .product-view-mode a:hover,
+    .top-bar-left .product-view-mode a.active,
+    .blog-item .blog-sharing a:hover,
+    .comment-section ul li .comment-body .reply-btn a:hover,
+    .product-details-des .action_link a.buy-btn,
+    .product-details-des .action_link a.buy-btn i,
+    .product-details-des .useful-links a:hover,
+    .custom-checkbox input:checked ~ .custom-control-label:before,
+    .custom-checkbox input:checked label:before,
+    .custom-checkbox .custom-control-input:checked ~ .custom-control-label:before,
+    .custom-checkbox .custom-control-input:checked label:before,
+    .custom-radio input:checked ~ .custom-control-label:before,
+    .custom-radio input:checked label:before,
+    .custom-radio .custom-control-input:checked ~ .custom-control-label:before,
+    .custom-radio .custom-control-input:checked label:before,
+    .cart-table .table thead,
+    .myaccount-tab-menu a:hover,
+    .myaccount-tab-menu a.active,
+    .team-member .team-thumb .team-social a:hover,
+    .blog-sidebar .title::before,
+    .blog-sidebar .blog-tags li a:hover,
+    .footer-top-wrapper .social-icons a:hover,
+    .footer-widget .widget-body a.map-btn:hover,
+    .footer-top-wrapper .newsletter__wrap .newsletter__box button,
+    .price-range-wrap .price-range.ui-widget-content .ui-slider-range,
+    .price-range-wrap .price-range.ui-widget-content .ui-slider-handle,
+    .layout-changer li button:hover,
+    .layout-changer li button.active {
+        background-color: #2196f3 !important;
+    }
 
 /*----- background color css end ----*/
 /*----- border color css start ----*/
@@ -191,4 +191,47 @@
 .product-details-des .action_link a.buy-btn:hover i,
 .footer-top-wrapper .newsletter__wrap .newsletter__box form button:hover {
     background-color: #b8242a !important;
+}
+
+.wenku-footer {
+    background-color: #FFFFFF;
+    padding: 30px;
+}
+
+.wenku-footer-dark {
+    background-color: #666;
+    color: #FFFFFF;
+    padding: 40px;
+}
+
+    .wenku-footer-dark a {
+        color: #FFFFFF;
+        display: inline-block;
+    }
+
+.wenku-footer .wenku-flink a {
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 15px;
+    line-height: 200%;
+}
+
+    .wenku-footer .wenku-flink a:hover {
+        color: #00B38A;
+    }
+
+.wenku-footer-dark .text-center {
+    line-height: 200%;
+    font-size: 13px;
+    color: #ffffff;
+}
+
+.wenku-footer-dark .wenku-help a {
+    margin: 0px 8px;
+}
+.help-block {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #737373;
 }

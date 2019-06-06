@@ -6,21 +6,29 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a class="nav-link" asp-area="Core" asp-controller="Manage" asp-action="Index" title="@Localizer["Manage"]">@Localizer["Hello {0}!", (await WorkContext.GetCurrentUser()).FullName]</a>
+    <li class="nav-item" style="border-left:1px solid rgba(64, 84, 224, 0.3);font-size:12px;font-weight:bold;">
+        <a style="color:#428bca" class="nav-link"  asp-area="Core" asp-controller="Manage" asp-action="Index" title="管理">@Localizer["欢迎  {0}!", (await WorkContext.GetCurrentUser()).FullName]</a>
     </li>
     if (User.IsInRole("admin") || User.IsInRole("vendor"))
     {
-        <li class="nav-item"><a class="nav-link" asp-area="Core" asp-controller="HomeAdmin" asp-action="Index">@Localizer["Dashboard"]</a></li>
+        <li class="nav-item" style="border-left:1px solid rgba(64, 84, 224, 0.3);font-size:12px;font-weight:bold;">
+            <a style="color:#428bca" class="nav-link" asp-area="Core" asp-controller="HomeAdmin" asp-action="Index">@Localizer["Dashboard"]</a>
+        </li>
     }
-    <li class="nav-item">
+    <li class="nav-item" style="border-left:1px solid rgba(64, 84, 224, 0.3);font-size:12px;font-weight:bold;">
         <form asp-area="Core" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="">
-            <button type="submit" class="btn btn-link">@Localizer["Log off"]</button>
+            <button type="submit" class="logoff btn nav-link" style="   background-color:transparent;  font-family: Poppins-Regular;
+    font-size: 12px;
+    line-height: 1.8;
+    font-weight:bold;
+    height: 100%;
+    color: #b2b2b2;
+    border-right: 1px solid rgba(64, 84, 224, 0.3);">注销</button>
         </form>
     </li>
 }
 else
 {
-    <li class="nav-item"><a class="nav-link" asp-area="Core" asp-controller="Account" asp-action="Login">@Localizer["Log in"]</a></li>
-    <li class="nav-item"><a class="nav-link" asp-area="Core" asp-controller="Account" asp-action="Register">@Localizer["Register"]</a></li>
+    <li class="nav-item" style="border-left:1px solid rgba(64, 84, 224, 0.3);font-size:12px;"><a style="color:#428bca"  class="nav-link" asp-area="Core" asp-controller="Account" asp-action="Login">登录</a></li>
+    <li class="nav-item" style="border-left:1px solid rgba(64, 84, 224, 0.3);border-right:1px solid rgba(64, 84, 224, 0.3);font-size:12px;"><a style="color:#428bca"  class="nav-link" asp-area="Core" asp-controller="Account" asp-action="Register">注册</a></li>
 }

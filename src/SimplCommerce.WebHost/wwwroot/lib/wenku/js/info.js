@@ -4,7 +4,8 @@ var f_cattid = "";
 var type = "";
 
 var ua = window.navigator.userAgent.toLowerCase();
-var isPC = function() {
+
+var isPC = function () {
 	var ua = navigator.userAgent,
 		isWindowsPhone = /(?:Windows Phone)/.test(ua),
 		isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
@@ -22,10 +23,10 @@ var isPC = function() {
 	};
 }
 var os = isPC();
-if(getQueryString("id")) {
-	id = getQueryString("id");
-
-}
+id = getLastString();
+//if(getQueryString("id")) {
+//	id = getQueryString("id");
+//}
 $(".bdsharebuttonbox").share();
 
 var app = new Vue({
@@ -46,17 +47,19 @@ var app = new Vue({
 		comment: "",
 		doc:"",
 		docstate:false,
-		docsnum:1
-	},
+        docsnum: 1,
+        catpchatoken:"1"
+    },
+    mounted: function () {
+        $('#ModalDownload').on('show.bs.modal',
+            function () {
+                alert("1");
+                app.captcha();
+            }
+        );
+    },
 	created: function() {
 		this.ajax();
-		if(getCookie('wenname')) {
-			this.iflogin = false;
-			this.wenname = getCookie('wenname');
-		} else {
-			this.iflogin = true;
-
-		}
 	},
 	methods: {
 		zhankai:function(){
@@ -101,10 +104,33 @@ var app = new Vue({
 				return false;
 			}
 			window.location.href = "search.html?wd=" + this.keyword;
-		},
-		download: function() {
-			var that = this;
-
+        },
+        captcha: function () {
+            ajaxsGet('https://localhost:49206/api/captcha/get/' + this.catpchatoken, {
+            }, function (data) {
+                $("#imgcaptcha").attr("src", 'data:image/gif;base64,' + data.img);
+                $("#hidCapToken").val(data.token);
+            });
+        },
+        download: function () {
+            if ($.trim($("#captchacode").val()) == "") {
+                wenku_alert("danger","验证码错误", 3000, "");
+                return;
+            }
+            var that = this;
+            ajaxsGet('https://localhost:49206/api/captcha/yz?token=' + $("#hidCapToken").val()
+                + "&code=" + $.trim($("#captchacode").val()) + "&id=" + that.id, {
+            }, function (data) {
+                if (!data.success) {
+                    wenku_alert("danger","验证码错误", data.desc, 3000, "");
+                } else {
+                    window.location.href = 'https://localhost:49206/api/products/down/' + data.downToken;
+                    //$.download('https://localhost:49206/api/products/down/' + data.downtoken);
+                    //ajaxsGet('https://localhost:49206/api/products/down/' + data.downtoken, {
+                    //}, function (data) {
+                    //})
+                }
+            });
 			if(this.datas.content[0].f_gold > 0 && this.iflogin) {
 
 				if(os.isAndroid || os.isPhone || ua.match(/MicroMessenger/i) == 'micromessenger') {
@@ -124,8 +150,7 @@ var app = new Vue({
 					return false;
 				} else {
 					ajaxs(inter_url + 'Interface/downLoad.ashx ', {
-						usercode: getCookie('wenname'),
-						id: this.datas.content[0].f_id
+                        usercode: id
 					}, function(data) {
 						if(data.code == '-1') {
 
@@ -174,7 +199,7 @@ var app = new Vue({
    //             	that.docstate=false;
    //             }
 
-            ajaxsGet('https://localhost:49206/api/products/show/14', {
+            ajaxsGet('https://localhost:49206/api/products/show/' + this.id, {
             }, function (data) {
 
                 that.datas = data;
@@ -270,3 +295,7 @@ function wenku_alert(cls, msg, timeout, url) {
 		}, t - 500);
 	}
 }
+
+
+
+

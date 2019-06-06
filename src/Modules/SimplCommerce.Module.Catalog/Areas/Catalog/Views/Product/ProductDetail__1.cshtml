@@ -17,17 +17,6 @@
 @section head {
     <link simpl-append-version="true" rel="stylesheet" href="~/lib/smoothproducts/css/smoothproducts.css" />
     <link simpl-append-version="true" rel="stylesheet" href="~/modules/catalog/product-detail.css" />
-    <link simpl-append-version="true" rel="stylesheet" href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" />
-    <link simpl-append-version="true" rel="stylesheet" href="~/lib/wenku/css/bootstrap.css" />
-
-    <link rel="stylesheet" href="~/lib/wenku/css/flat-ui.min.css" />
-
-    <link rel="stylesheet" href="~/lib/wenku/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="~/lib/wenku/css/jquery.toast.min.css" />
-    <link rel="stylesheet" type="text/css" href="~/lib/wenku/css/dochub.css" />
-
-    <link rel="stylesheet" type="text/css" href="~/lib/wenku/css/dochub-mobile.css" />
-    <script simpl-append-version="true" src="~/lib/wenku/wenku.js"></script>
 }
 
 <nav aria-label="breadcrumb">
@@ -131,7 +120,7 @@
                                 <input type="hidden" name="productId" value="@variant.Id" />
                                 <div class="product-quantity">
                                     <button type="button" class="quantity-button" name="subtract" value="-">-</button>
-                                    <input type="text" class="quantity-field" readonly="readonly" name="qty" value="1" />
+                                    <input type="text" class="quantity-field" readonly="readonly" name="qty" value="1">
                                     <button type="button" class="quantity-button" name="add" value="+">+</button>
                                 </div>
                                 <button type="button" disabled="@(!variant.IsAllowToOrder || (variant.StockTrackingIsEnabled && variant.StockQuantity <= 0))" class="btn btn-lg btn-add-cart">@Localizer["Add to cart"]</button>
@@ -190,7 +179,7 @@
                         <input type="hidden" name="productId" value="@Model.Id" />
                         <div class="product-quantity">
                             <button type="button" class="quantity-button" name="subtract" value="-">-</button>
-                            <input type="text" class="quantity-field" readonly="readonly" name="qty" value="1" />
+                            <input type="text" class="quantity-field" readonly="readonly" name="qty" value="1">
                             <button type="button" class="quantity-button" name="add" value="+">+</button>
                         </div>
                         <button type="button" disabled="@(!Model.IsAllowToOrder || (Model.StockTrackingIsEnabled && Model.StockQuantity <= 0))" class="btn btn-lg btn-add-cart">@Localizer["Add to cart"]</button>
@@ -250,286 +239,46 @@
     }
 </div>
 
-<div id="app" v-cloak=v-cloak v-if="datas">
-    <div class="container wenku-main">
-        <div class="row">
-            <div class="col-xs-9 wenku-left wenku-nopadding">
-
-                <div class="panel panel-default wenku-noborder">
-                    <div class="panel-body">
-                        <h1>
-                            <img :alt="datas.content[0].f_title" :src="inter_img+datas.content[0].f_img" /> {{datas.content[0].f_title}}
-
-                        </h1>
-                        <div class="help-block wenku-doc-info">
-                            <span>
-                                <a :href="'coding.html?f_catid='+datas.content[0].f_catid" :title="datas.content[0].f_onelevel">{{datas.content[0].f_onelevel}}</a> >
-                                <a :href="'coding.html?f_catid='+datas.content[0].f_catid+'&f_cattid'+datas.content[0].f_cattid" :title="f_catidName.f_towlevel">{{datas.content[0].f_towlevel}}</a> >
-
-                                <span class="text-muted">文档预览</span>
-                            </span>
-                            <div class="pull-right text-muted">
-                                <span title="页数"><i class="fa fa-file-text-o"></i> {{datas.content[0].f_page}} 页</span>
-                                <span title="上传人"><i class="fa fa-download"></i> {{datas.content[0].f_code}} </span>
-                                <span title="浏览"><i class="fa fa-eye"></i> {{datas.content[0].f_view}} 浏览</span>
-                                <span title="金币"><i class="fa fa-comments-o"></i> {{datas.content[0].f_gold}}</span>
-                                <span title="日期"><i class="fa fa-heart-o"></i> {{datas.content[0].f_date}}</span>
-
-                            </div>
-                        </div>
-
-                        <div class="wenku-viewer" id="wenku-viewer" data-scale="9">
-
-                            <img v-for="(t,i) in  doc" src="images/grey.gif" :data-original="inter_img+t.pic" class="wenku-lazy wenku-viewer-img wenku-page5" :data-page="i" />
-                            <div v-show="docstate" @@click="zhankai" style="position: relative;z-index: 999;" class="wenku-viewer-more text-center" data-next="6" data-ext="svg" data-svg="https://static.wenkuzhijia.cn/fb5d2c230bf3b4f99dd83bd15622a9b4/">
-
-                                <a href="javascript:void(0);" class="wenku-viewer-more-btn">
-                                    <div class="help-block">
-
-                                        当前文档{{datas.content[0].f_page}} 页 <br /> <!--还有 <span class="wenku-unread-pages">{{datas.content[0].f_page.length-doc.length}}</span>--> <span class="text-primary">继续阅读</span>
-                                    </div>
-                                </a>
-
-                                <div class="help-block">
-                                    <a href="javascript:void(0);" class="wenku-viewer-more-btn"><i class="fa fa-angle-down"></i></a>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    s=
-                </div>
-
-                s=
+@if (Model.RelatedProducts.Any())
+{
+    <h2 class="page-header">Related Products</h2>
+    <div class="row product-list">
+        @foreach (var product in Model.RelatedProducts)
+        {
+            <div class="col-xs-6 col-md-3">
+                <partial name="_ProductThumbnail" model="product" />
             </div>
-
-            s=
-            <div class="col-xs-3 wenku-right">
-
-                <div class="panel panel-default wenku-noborder wenku-maylike">
-                    <div class="panel-heading">
-                        <div class="strong">热门文档</div>
-                    </div>
-                    <div class="panel-body">
-
-                        <ul class="wenku-tabs-list">
-
-                            <li v-for="(t,i) in datas.Hot">
-                                <img :alt="t.f_title" :src="inter_img+t.f_img" />
-                                <a :href="'info.html?id='+t.f_id" target="_blank" :title="t.f_title">{{t.f_title}}</a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="panel panel-default wenku-noborder wenku-maylike">
-                    <div class="panel-heading">
-                        <div class="strong">最新文档</div>
-                    </div>
-                    <div class="panel-body">
-
-                        <ul class="wenku-tabs-list">
-
-                            <li v-for="(t,i) in datas.New">
-                                <img :alt="t.f_title" :src="inter_img+t.f_img" />
-                                <a :href="'info.html?id='+t.f_id" target="_blank" :title="t.f_title">{{t.f_title}}</a>
-                            </li>
-                        </ul>
-
-                    </div>
-                </div>
-
-            </div>
-            <div class="panel panel-default wenku-noborder wenku-comment">
-                <div class="panel-body">
-
-                    <form role="form" method="post" class="wenku-comment-form">
-                        <div class="form-group">
-                            <textarea name="Comment" rows="3" class="form-control" v-model="comment" required="required" placeholder="文明评论，文明你我他"></textarea>
-
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-9 clearfix wenku-nopadding">
-                                <div class="help-block">您好可以输入 <span class="text-danger wenku-comment-num">{{255-comment.length}}</span> 个字符</div>
-                            </div>
-
-                            <div class="col-xs-3 wenku-no-pdr clearfix text-right">
-                                <input type="button" class="btn btn-danger btn-block" @@click="subcomment" value="发表评论" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div v-if="datas.content[0].indexComment.length>0" class="panel panel-default wenku-noborder wenku-comment-list">
-                <div class="panel-heading">评论列表</div>
-                <div class="panel-body">
-
-                    <ul v-for="(t,i) in datas.content[0].indexComment">
-
-                        <li class="clearfix">
-                            <div class="col-xs-1 wenku-nopadding">
-                                <a href="#" class="thumbnail thumbnail-avatar" title="">
-                                    <img :src="inter_url+t.f_avatar" class="img-responsive " alt="" />
-                                </a>
-                            </div>
-                            <div class="col-xs-11 wenku-no-pdr">
-                                <a href="#">{{t.f_user}}</a>
-
-                                <span class="color-gray pull-right">{{t.f_datetime}}</span>
-                                <div class="help-block wenku-comment-content">{{t.f_content}}</div>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </div>
-            </div>
-        </div>
-
+        }
     </div>
+}
 
-    <div class="container-fluid wenku-footer">
-        <div class="container">
-            <div class="container-fluid wenku-footer">
-                <div class="container">
-                    <div class="row wenku-flink">
-                        <div class="col-xs-12">
-                            <div><strong>友情链接</strong></div>
-                            <div class="help-block">
-
-                                <a v-for="(t,i) in  data.link" :href="t.f_link" target="_blank" title="t.f_tile">{{t.f_title}}</a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
+@if (Model.CrossSellProducts.Any())
+{
+    <h2 class="page-header">Cross-sell Products</h2>
+    <div class="row product-list">
+        @foreach (var product in Model.CrossSellProducts)
+        {
+            <div class="col-xs-6 col-md-3">
+                <partial name="_ProductThumbnail" model="product" />
             </div>
-        </div>
+        }
     </div>
-    <div class="container-fluid wenku-footer-dark">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 text-center wenku-help help-block">
+}
 
-                    <a href="about1.html" target="_blank" title="关于我们">关于我们</a>
+@await Component.InvokeAsync("ProductRecentlyViewed", new { productId = Model.Id })
 
-                    <a href="about2.html" target="_blank" title="关于我们">文库协议</a>
-
-                    <a href="about3.html" target="_blank" title="意见反馈">版本更新</a>
-
-                    <a href="about4.html" target="_blank" title="免责声明">免责声明</a>
-
-                    <a href="about5.html" target="_blank" title="意见反馈">联系我们</a>
-
-                </div>
-                <div class="col-xs-12 text-center help-block">
-                    文库之家&nbsp;&nbsp;&copy;2019&nbsp;&nbsp;<span class="text-muted">|</span>&nbsp;&nbsp;
-                    <a href="/sitemap.xml" title="站点地图" target="_blank">站点地图</a>
-                </div>
-                <div class="col-xs-12 text-center help-block">
-                    <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">粤ICP备18004373号-2</a>
-                </div>
-                <div class="col-xs-12 text-center help-block">
-                    <small>
-                        Powered By <a href="#" style="color: #1abc9c;" target="_blank" title="DocHub">DocHub</a> v2.1
-                    </small>
-                </div>
-
-                <div class="col-xs-12 text-center">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid navbar-default navbar-fixed-bottom" role="navigation">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-9">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="javascript:void(0);" class="wenku-expend"><i class="fa fa-arrows-alt em14"></i>&nbsp;</a>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="javascript:void(0);" data-toggle="modal" data-target="#ModalShare"><i class="fa fa-share-alt em14"></i>&nbsp;</a>
-                        </li>
-
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <p class="navbar-text"><i class="fa fa-database"></i>&nbsp;&nbsp;{{datas.content[0].f_gold}}&nbsp;&nbsp;个金币 </p>
-                        <li class="active" data-toggle="modal" data-target="#ModalDownload">
-                            <a href="javascript:void(0);"><i class="fa fa-cloud-download em14"></i> 下载文档</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-xs-3">
-                    <ul class="nav navbar-nav navbar-right wenku-up-to-top">
-                        <li class="active go-top">
-                            <a href="#wenku-content"><i class="fa fa-arrow-up em14"></i> 回到顶部</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+<div>
+    <h3>@Localizer["Customer reviews"]</h3>
+    @await Component.InvokeAsync("Review", new { entityId = Model.Id, entityTypeId = "Product" })
 </div>
-    @if (Model.RelatedProducts.Any())
-    {
-        <h2 class="page-header">Related Products</h2>
-        <div class="row product-list">
-            @foreach (var product in Model.RelatedProducts)
-            {
-                <div class="col-xs-6 col-md-3">
-                    <partial name="_ProductThumbnail" model="product" />
-                </div>
-            }
-        </div>
-    }
-
-    @if (Model.CrossSellProducts.Any())
-    {
-        <h2 class="page-header">Cross-sell Products</h2>
-        <div class="row product-list">
-            @foreach (var product in Model.CrossSellProducts)
-            {
-                <div class="col-xs-6 col-md-3">
-                    <partial name="_ProductThumbnail" model="product" />
-                </div>
-            }
-        </div>
-    }
-
-    @await Component.InvokeAsync("ProductRecentlyViewed", new { productId = Model.Id })
-
-    <div>
-        <h3>@Localizer["Customer reviews"]</h3>
-        @await Component.InvokeAsync("Review", new { entityId = Model.Id, entityTypeId = "Product" })
-    </div>
-    <br />
-    <div>
-        <h3>@Localizer["Customer comments"]</h3>
-        @await Component.InvokeAsync("Comment", new { entityId = Model.Id, entityTypeId = "Product" })
-    </div>
-
-    @section scripts {
-        <partial name="_ValidationScriptsPartial" />
-        <script simpl-append-version="true" src="~/lib/smoothproducts/js/smoothproducts.js"></script>
-        <script simpl-append-version="true" src="~/modules/catalog/product-detail.js"></script>
-        <script simpl-append-version="true" src="~/lib/wenku/wenku.js"></script>
-        <script src="~/lib/wenku/js/base.js" type="text/javascript" charset="utf-8"></script>
-
-        <script src="~/lib/wenku/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="~/lib/wenku/js/jquery.toast.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="~/lib/wenku/js/jquery.scrollstop.js" type="text/javascript" charset="utf-8"></script>
-        <script src="~/lib/wenku/js/jquery.lazyload.js" type="text/javascript" charset="utf-8"></script>
-        <script src="~/lib/wenku/js/jquery.share.min.js"></script>
-        <script src="~/lib/wenku/js/bootstrap.min.js"></script>
-        <script src="~/lib/wenku/js/vue.js" type="text/javascript" charset="utf-8"></script>
-        <script src="~/lib/wenku/js/info.js" type="text/javascript" charset="utf-8"></script>
-        <script src="~/lib/wenku/js/new_file.js" type="text/javascript" charset="utf-8"></script>
-    }
-
-
+<br />
+<div>
+    <h3>@Localizer["Customer comments"]</h3>
+    @await Component.InvokeAsync("Comment", new { entityId = Model.Id, entityTypeId = "Product" })
 </div>
+
+@section scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script simpl-append-version="true" src="~/lib/smoothproducts/js/smoothproducts.js"></script>
+    <script simpl-append-version="true" src="~/modules/catalog/product-detail.js"></script>
+}

@@ -6,45 +6,45 @@
     ViewData["Title"] = Localizer["Register"];
 }
 
-<h2>@ViewData["Title"].</h2>
 
-<h4>@Localizer["Create a new account."]</h4>
+
+<h4>@Localizer["创建新用户"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-8">
         <form asp-area="Core" asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" role="form">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group row">
-                <label asp-for="Email" class="col-md-4 col-form-label">@Localizer["Email"]</label>
-                <div class="col-md-8">
+                <label asp-for="Email" class="col-md-2 col-form-label">@Localizer["邮箱"]</label>
+                <div class="col-md-10">
                     <input asp-for="Email" class="form-control" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
-                <label asp-for="FullName" class="col-md-4 col-form-label">@Localizer["Full name"]</label>
-                <div class="col-md-8">
+                <label asp-for="FullName" class="col-md-2 col-form-label">@Localizer["用户名"]</label>
+                <div class="col-md-10">
                     <input asp-for="FullName" class="form-control" />
                     <span asp-validation-for="FullName" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
-                <label asp-for="Password" class="col-md-4 col-form-label">@Localizer["Password"]</label>
-                <div class="col-md-8">
+                <label asp-for="Password" class="col-md-2 col-form-label">@Localizer["密码"]</label>
+                <div class="col-md-10">
                     <input asp-for="Password" class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
-                <label asp-for="ConfirmPassword" class="col-md-4 col-form-label">@Localizer["Confirm password"]</label>
-                <div class="col-md-8">
+                <label asp-for="ConfirmPassword" class="col-md-2 col-form-label">@Localizer["确认密码"]</label>
+                <div class="col-md-10">
                     <input asp-for="ConfirmPassword" class="form-control" />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
-                <div class="offset-md-4 col-md-8">
-                    <button type="submit" class="btn btn-primary">@Localizer["Register"]</button>
+                <div class="offset-md-5 col-md-8">
+                    <button type="submit" class="btn btn-primary">@Localizer["注册"]</button>
                 </div>
             </div>
         </form>
@@ -52,7 +52,7 @@
 
     <div class="col-md-4">
         <section>
-            <h4>@Localizer["Use another service to log in."]</h4>
+            <h4>@Localizer["使用第三方登录"]</h4>
             <hr />
             @{
                 var schemes = await SignInManager.GetExternalAuthenticationSchemesAsync();

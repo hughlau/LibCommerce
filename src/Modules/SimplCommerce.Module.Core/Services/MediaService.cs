@@ -9,11 +9,14 @@ namespace SimplCommerce.Module.Core.Services
     {
         private readonly IRepository<Media> _mediaRepository;
         private readonly IStorageService _storageService;
+        private readonly ITransferFileService _transferFileService;
 
-        public MediaService(IRepository<Media> mediaRepository, IStorageService storageService)
+        public MediaService(IRepository<Media> mediaRepository, IStorageService storageService
+            ,ITransferFileService transferFileService)
         {
             _mediaRepository = mediaRepository;
             _storageService = storageService;
+            _transferFileService = transferFileService;
         }
 
         public string GetMediaUrl(Media media)
@@ -36,9 +39,9 @@ namespace SimplCommerce.Module.Core.Services
             return GetMediaUrl(media);
         }
 
-        public Task SaveMediaAsync(Stream mediaBinaryStream, string fileName, string mimeType = null)
+        public Task SaveMediaAsync(Stream mediaBinaryStream, string category, string fileName, string mimeType = null)
         {
-            return _storageService.SaveMediaAsync(mediaBinaryStream, fileName, mimeType);
+            return _storageService.SaveMediaAsync(mediaBinaryStream, category, fileName, mimeType);
         }
 
         public Task DeleteMediaAsync(Media media)
@@ -50,6 +53,39 @@ namespace SimplCommerce.Module.Core.Services
         public Task DeleteMediaAsync(string fileName)
         {
             return _storageService.DeleteMediaAsync(fileName);
+        }
+
+        public int FileToImage(string filePath,string categoryId)
+        {
+            return _transferFileService.FileToImage(filePath,categoryId);
+        }
+
+        public string GetMediaUrlByUpload(Media media,string category)
+        {
+            if (media == null)
+            {
+                return GetMediaUrl("no-image.png");
+            }
+            return _storageService.GetMediaUrlUpload(media.FileName, category);
+        }
+
+        public string GetMediaUrlByUpload(string fileName, string category)
+        {
+            return _storageService.GetMediaUrlUpload(fileName, category);
+        }
+
+        public string GetMediaUrlByImg(Media media, string category)
+        {
+            if (media == null)
+            {
+                return GetMediaUrl("no-image.png");
+            }
+            return _storageService.GetMediaUrlImg(media.FileName, category);
+        }
+
+        public string GetMediaUrlByImg(string fileName, string category)
+        {
+            return _storageService.GetMediaUrlImg(fileName, category);
         }
     }
 }
